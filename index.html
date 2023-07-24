@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <title>CIaaS Dev Tools</title>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    </head>
+
+    <body x-data="xx">
+
+        <main>
+            <section class="py-5">
+                <div class="container">
+                    <h1 class="mb-4">Rate Submission Prompt Template Checker</h1>
+
+                    <div class="row">
+                        <div class="col-lg-12 mb-3">
+                            <div class="card">
+                                <div class="card-header">Available Variables</div>
+                                <div class="card-body">
+                                    <ol>
+                                        <li>
+                                            <code>&#x3C;&#x3C;&#x3C;title&#x3E;&#x3E;&#x3E;</code> - Title of the
+                                            innovation competition
+                                        </li>
+                                        <li>
+                                            <code>&#x3C;&#x3C;&#x3C;theme&#x3E;&#x3E;&#x3E;</code> - Theme of the
+                                            innovation competition
+                                        </li>
+                                        <li>
+                                            <code>&#x3C;&#x3C;&#x3C;qna&#x3E;&#x3E;&#x3E;</code> - List of questions and
+                                            answers for innovation submission
+                                        </li>
+                                        <li>
+                                            <code>&#x3C;&#x3C;&#x3C;format&#x3E;&#x3E;&#x3E;</code> - The format that
+                                            should be returned by the AI
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    Template
+                                </div>
+                                <div class="card-body">
+                                    <textarea x-model="template" id="template" rows="20" class="form-control"
+                                        placeholder="Type template here..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    Generated Prompt
+                                </div>
+                                <div class="card-body">
+                                    <textarea id="preview" rows="20" class="form-control" readonly></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('xx', () => ({
+                    title: 'Kompetisi Inovasi Example',
+                    theme: 'Social Innovation',
+                    format: JSON.stringify({
+                        score: 100,
+                        comment: 'Komentar Anda',
+                    }),
+                    qna: [
+                        {
+                            question: "Siapa (kelompok customer) yang memiliki permasalahan ini?",
+                            answer: "Para pelaku UMKM di kota Banjarmasin."
+                        },
+                        {
+                            question: "Mengapa penting untuk membantu mereka?",
+                            answer: "Saat ini banyak UMKM yang kesulitan mengembangkan bisnis mereka."
+                        },
+                        {
+                            question: "Apa permasalahan yang dihadapi (dari sudut pandang) customer?",
+                            answer: "Pelaku UMKM kesulitan meningkatkan penjualan mereka karena bisnis mereka kurang dikenal."
+                        },
+                        {
+                            question: "Apa dampak emosional dari permasalahan ini (yang customer rasakan)?",
+                            answer: "Mereka umumnya menjadi sulit untuk menghidupi rumah tangga dikarenakan selama ini sumber pendapatan mereka hanya berasal dari usaha kecil mereka."
+                        },
+                        {
+                            question: "Apa dampak kuantitatif yang terukur dari permasalahan ini (bagi customer)?",
+                            answer: "Hasil mendapatkan dalam 1 tahun terakhir mengalamai penurunan sebesar 57%."
+                        },
+                        {
+                            question: "Seberapa sering dan kapan biasanya permasalahan ini dialami customer?",
+                            answer: "Permasalahan ini sangat sering terjadi."
+                        },
+                        {
+                            question: "Bagaimana customer berupaya menangani/mengatasi permasalahan tersebut saat ini?",
+                            answer: "Saat ini kebanyakan pelaku UMKM memasarkannya melalui akun sosial media mereka."
+                        },
+                        {
+                            question: "Apa kekurangan dari cara penanganan customer saat ini?",
+                            answer: "Pemasaran melalui sosial media masih memiliki kekurangan apabila akun sosial media pelaku usaha tidak memiliki banyak pengikut."
+                        },
+                        {
+                            question: "Lompatan atau terobosan apa yang diharapkan customer?",
+                            answer: "Adanya sebuah platform yang menjadi pusat pemasaran UMKM, tempat terjadinya transaksi selain secara langsung."
+                        },
+                        {
+                            question: "Apa ide inovasi anda untuk menyelesaikan permasalahan customer dan mewujudkan lompatan atau terobosan tersebut?",
+                            answer: "Membuat sebuah platform UMKM berbasis mobile yang akan menjadi semacam pusat transaksi dan pemasaran penjualan UMKM."
+                        },
+                        {
+                            question: "Apa dampak yang bisa dihasilkan dari ide inovasi anda bagi customer?",
+                            answer: "Dengan adanya platform tersebut, pelaku UMKM memiliki kesempatan yang sama untuk dijangkau pembeli. Mereka juga dengan mudah dapat memantau statistik penjualan mereka, sehingga dapat mengetahui apa yang harus dilakukan untuk meningkatkan hasil penjualan."
+                        }
+                    ],
+                    template: `Anda adalah konsultan inovasi yang handal, dan ini adalah proposal kompetisi inovasi tentang <<<title>>> dengan tema <<<theme>>>.
+Berikut ini adalah pertanyaan assesment beserta jawaban dari proposal tersebut:\n\n<<<qna>>>\n\nBerdasarkan pertanyaan dan jawaban yang diberikan, berikan penilaian Anda terhadap inovasi yang diajukan dari proposal ini dengan skala 1-100.\n\nBerikan jawaban beserta komentar Anda dalam bentuk JSON seperti berikut ini:<<<format>>>\n\n`,
+                    init() {
+                        const render = () => {
+                            const template = this.template;
+                            const qnaArray = this.qna;
+                            const format = this.format;
+
+                            const variable = {
+                                title: '<<<title>>>',
+                                theme: '<<<theme>>>',
+                                qna: '<<<qna>>>',
+                                format: '<<<format>>>',
+                            };
+
+                            let qna = '';
+                            for (let i = 0; i < qnaArray.length; i++) {
+                                const qnaItem = qnaArray[i];
+                                qna += `\nPertanyaan: ${qnaItem.question}\n`;
+                                qna += `\nJawaban: ${qnaItem.answer}\n`;
+                            }
+
+                            let prompt = template;
+
+                            prompt = prompt.replace(new RegExp(variable.title, 'g'), this.title);
+                            prompt = prompt.replace(new RegExp(variable.theme, 'g'), this.theme);
+                            prompt = prompt.replace(new RegExp(variable.qna, 'g'), qna);
+                            prompt = prompt.replace(new RegExp(variable.format, 'g'), JSON.stringify(format));
+
+                            document.getElementById('preview').innerHTML = prompt;
+                        }
+
+                        this.$watch('template', () => render());
+
+                        render();
+                    }
+                }))
+            })
+        </script>
+    </body>
+
+</html>
